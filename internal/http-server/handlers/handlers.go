@@ -1,21 +1,8 @@
 package handlers
 
-import (
-	"errors"
-	"log/slog"
-
-	"github.com/wissio/go_final_project/internal/storage/sqlite"
-)
-
-type Handlers struct {
-	s   *sqlite.Storage
-	log *slog.Logger
-}
+import "github.com/wissio/go_final_project/internal/constants"
 
 const (
-	DateLayout    = "20060102"
-	DateDotLayout = "02.01.2006"
-	taskLimit     = 10
+	DateLayout    = constants.DateLayout
+	DateDotLayout = constants.DateDotLayout
 )
-
-var ErrTaskNotFound = errors.New("задача не найдена")

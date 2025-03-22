@@ -6,6 +6,7 @@ import (
 	"time"
 
 	sl "github.com/wissio/go_final_project/internal/lib/logger/slog"
+	"github.com/wissio/go_final_project/internal/lib/schedulerutils"
 	"github.com/wissio/go_final_project/internal/services"
 	"github.com/wissio/go_final_project/internal/storage/sqlite"
 )
@@ -23,7 +24,7 @@ func NextDate(log *slog.Logger, s *sqlite.Storage) http.HandlerFunc {
 			return
 		}
 
-		nextDate, err := services.NextDate(now, dateStr, repeatStr)
+		nextDate, err := schedulerutils.NextDate(now, dateStr, repeatStr)
 		if err != nil {
 			log.Error("Failed to calculate next date", sl.Err(err),
 				slog.String("now", nowStr), slog.String("date", dateStr), slog.String("repeat", repeatStr))

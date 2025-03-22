@@ -9,7 +9,7 @@ import (
 	"time"
 
 	sl "github.com/wissio/go_final_project/internal/lib/logger/slog"
-	"github.com/wissio/go_final_project/internal/services"
+	"github.com/wissio/go_final_project/internal/lib/schedulerutils"
 	"github.com/wissio/go_final_project/internal/storage/sqlite"
 )
 
@@ -57,7 +57,7 @@ func DoneTask(log *slog.Logger, s *sqlite.Storage) http.HandlerFunc {
 				return
 			}
 		} else {
-			nextDate, err := services.NextDate(time.Now(), task.Date, task.Repeat)
+			nextDate, err := schedulerutils.NextDate(time.Now(), task.Date, task.Repeat)
 			if err != nil {
 				log.Error("Error calculating next date", sl.Err(err))
 				http.Error(w, `{"error":"Error calculating next date"}`, http.StatusBadRequest)

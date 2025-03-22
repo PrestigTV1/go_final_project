@@ -3,7 +3,7 @@
 
 # Multi-Stage Build [image size 23 MB]
 # Stage 1: Build stage
-FROM golang:alpine AS builder
+FROM golang:1.22.5-alpine AS builder
 # Set the working directory
 WORKDIR /app
 # Download & install necessary the gcc, libc-dev and binutils packages

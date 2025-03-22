@@ -17,11 +17,17 @@ import (
 func main() {
 	cfg := config.MustLoad()
 	log := logger.SetupLogger(cfg.Env)
+
 	storage, err := sqlite.New(cfg.StoragePath)
 	if err != nil {
 		log.Error("Failed to initialize storage", sl.Err(err))
 		os.Exit(1)
 	}
+	defer func() {
+		if err := storage.Close(); err != nil {
+			log.Error("Failed to close storage", sl.Err(err))
+		}
+	}()
 
 	router := chi.NewRouter()
 	registerRoutes(router, log, storage)

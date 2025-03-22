@@ -5,6 +5,7 @@ import (
 	"log/slog"
 	"time"
 
+	"github.com/wissio/go_final_project/internal/lib/schedulerutils"
 	"github.com/wissio/go_final_project/internal/models"
 )
 
@@ -41,7 +42,7 @@ func ValidateTask(log *slog.Logger, task *models.Task) error {
 		}
 
 		if task.Repeat != "" {
-			task.Date, err = NextDate(time.Now(), task.Date, task.Repeat)
+			task.Date, err = schedulerutils.NextDate(time.Now(), task.Date, task.Repeat)
 			if err != nil {
 				return fmt.Errorf("error calculating next date: %v", err)
 			}

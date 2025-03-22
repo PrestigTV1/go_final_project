@@ -8,8 +8,8 @@ import (
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
+	"github.com/wissio/go_final_project/internal/lib/schedulerutils"
 	"github.com/wissio/go_final_project/internal/models"
-	"github.com/wissio/go_final_project/internal/services"
 )
 
 const limitTask = 10
@@ -136,7 +136,7 @@ func (s *Storage) DoneTask(id int64) error {
 		return err
 	}
 	if task.Repeat != "" {
-		nextDate, err := services.NextDate(time.Now(), task.Date, task.Repeat)
+		nextDate, err := schedulerutils.NextDate(time.Now(), task.Date, task.Repeat)
 		if err != nil {
 			err = wrapError(op, err)
 			return err
@@ -218,4 +218,7 @@ func (s *Storage) GetTasks(date, search string, limit int) ([]models.Task, error
 
 func wrapError(op string, err error) error {
 	return fmt.Errorf("%s: %w", op, err)
+}
+func (s *Storage) Close() error {
+	return s.db.Close()
 }
